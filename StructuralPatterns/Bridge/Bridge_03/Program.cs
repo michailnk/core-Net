@@ -4,9 +4,9 @@ namespace Bridge_03 {
     class Program {
         static void Main(string[] args) {
             Car car = new Sedan(new Skoda());
-            car.PrintMark();
+            car.ShowDatails();
             car = new Hatchback(new Kia());
-            car.PrintMark();
+            car.ShowDatails();
         }
     }
 
@@ -15,32 +15,37 @@ namespace Bridge_03 {
         protected Car(Marke marke) {
             this.marke = marke;
         }
+        public void ShowDatails() {
+            Console.Write( GetType().Name);
+            PrintMark();
+        }
         public abstract void PrintMark();
+
     }
     class Sedan:Car {
         public Sedan(Marke marke) : base(marke) {  }
         public override void PrintMark() {
-            marke.SetMarke(this);
+            marke.SetMarke();
         }
     }
     class Hatchback:Car {
         public Hatchback(Marke marke) : base(marke) { }
         public override void PrintMark() {
-            marke.SetMarke(this);
+            marke.SetMarke();
         }
     }
     interface Marke {
-        void SetMarke(Car body);
+        void SetMarke();
     }
 
     class Skoda:Marke {
-        public void SetMarke(Car body) {
-            Console.WriteLine("This is Skoda - "+ body.GetType().Name);
+        public void SetMarke() {
+            Console.WriteLine(" Skoda ");
         }
     }
     class Kia:Marke {
-        public void SetMarke(Car body) {
-            Console.WriteLine("This is Kia - "+body.GetType().Name);
+        public void SetMarke() {
+            Console.WriteLine(" Kia ");
         }
     }
 }
