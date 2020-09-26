@@ -13,7 +13,6 @@ namespace Decorator_02 {
     abstract class Pizza {
         public string Name { protected set; get; }
         public abstract double GetCost();
-
         protected Pizza(string name) {
             Name = name;
         }
