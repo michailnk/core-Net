@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 
-namespace Observer_01_Pull_Model_ {
-
+namespace Observer_02_Push_Model_ {
     abstract class Subject {
         ArrayList observers = new ArrayList();
+        public abstract string State { get; set; }
+
         public void Attach(Observer observer) {
             observers.Add(observer);
         }
@@ -13,14 +14,14 @@ namespace Observer_01_Pull_Model_ {
         }
         public void Notify() {
             foreach(Observer observer in observers)
-                observer.Update();
+                observer.Update(State);
         }
     }
     class ConcreteSubject:Subject {
-        public string State { get; set; }
+        public override string State { get; set; }
     }
     public abstract class Observer {
-        public abstract void Update();
+        public abstract void Update(string State);
     }
     class ConcreteObserver:Observer {
         string observerState;
@@ -29,9 +30,9 @@ namespace Observer_01_Pull_Model_ {
         public ConcreteObserver(ConcreteSubject subject) {
             this.subject = subject;
         }
-        public override void Update() {
-            observerState = subject.State;
-            Console.WriteLine(this.observerState + " " + GetHashCode()) ;
+        public override void Update(string state) {
+            observerState = state;
+            Console.WriteLine(this.observerState + GetHashCode());
         }
     }
 
@@ -40,9 +41,8 @@ namespace Observer_01_Pull_Model_ {
             ConcreteSubject subject = new ConcreteSubject();
             subject.Attach(new ConcreteObserver(subject));
             subject.Attach(new ConcreteObserver(subject));
-            subject.State = "Some State...";
+            subject.State = "Some State... ";
             subject.Notify();
-
         }
     }
 }
